@@ -31,9 +31,14 @@ function main(){
     const x = e.clientX-canvas.offsetLeft+window.scrollX;
     const y = e.clientY-canvas.offsetTop+window.scrollY;
     ctx.fillStyle = 'red'
-    ctx.font = '30px Arial'
+    const fontSize = 30
+    ctx.font = fontSize+'px Arial'
     const txt = "This is a test."
-    ctx.fillText(txt, x, y)
+    const txtMetrics = ctx.measureText(txt)
+    const txtWidth = txtMetrics.actualBoundingBoxRight + txtMetrics.actualBoundingBoxLeft
+    const txtX = x-txtWidth/2
+    const txtY = y+fontSize*1/4
+    ctx.fillText(txt, Math.min(width-txtWidth, Math.max(0, txtX)), Math.min(height-fontSize*1/4, Math.max(fontSize, txtY)))
 
   }
   canvas.addEventListener('mousemove', mouseMove,false)
